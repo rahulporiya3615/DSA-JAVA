@@ -1,0 +1,245 @@
+
+import java.util.Scanner;
+
+public class doublylinklist {
+
+    Node head = null;
+    Node tail = null;
+
+    public static void main(String[] args) {
+        doublylinklist doublylinklist = new doublylinklist();
+        Scanner s = new Scanner(System.in);
+
+        while (1 == 1) {
+            System.out.println("select operation");
+            System.out.println("1.Insert node");
+            System.out.println("2.Delete node");
+            System.out.println("3. display");
+            System.out.println("0. stoping");
+            System.out.println("*************");
+            System.out.print("enter input:");
+            int n = s.nextInt();
+            switch (n) {
+                case 1:
+                System.out.println("1. insert first ");
+                System.out.println("2. insert last  ");
+                System.out.println("3. insert specific position ");
+                    int sv=s.nextInt();
+                    switch (sv) {
+                        case 1:
+                        System.out.println(" ");
+                            doublylinklist.addfirst();
+                            break;
+                        case 2:
+                            doublylinklist.addlast();
+                            break;
+                        case 3:
+                            doublylinklist.addspecific();
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    break;
+                   
+                case 2:
+                System.out.println(" ");
+                System.out.println("4. deletion first ");
+                System.out.println("5. deletion last ");
+                System.out.println("6. deletion specific position ");
+                int svv=s.nextInt();
+                switch (svv) {
+                    case 4:
+                        doublylinklist.deletefirst();
+                        break;
+                    case 5:
+                        doublylinklist.deletelast();
+                        break;
+                    case 6:
+                        doublylinklist.deletespecific();
+                        break;
+                
+                    default:
+                        break;
+                }
+                    break;
+                    
+                case 3:
+                    doublylinklist.display();
+                    break;
+        
+                case 0:
+                    System.out.println("exting......");
+                    return;
+
+            }
+
+        }
+
+    }
+
+    public void addfirst() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("enter data");
+
+        int data = s.nextInt();
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode.next = head;
+            head = newNode;
+            newNode.pre = null;
+            tail = newNode;
+        }
+        System.out.println("node insert......");
+    }
+
+    public void addlast() {
+
+        Scanner s = new Scanner(System.in);
+        System.out.println("enter data");
+        Node temp = head;
+        int data = s.nextInt();
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+            newNode.pre = temp;
+            newNode.next = null;
+            tail = newNode;
+
+        }
+        System.out.println("node insert......");
+
+    }
+
+    public void addspecific() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("enter data");
+        Node temp = head;
+        Node ptr = temp.next;
+        int data = s.nextInt();
+        System.out.println("enter location");
+        int loc = s.nextInt();
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            for (int i = 0; i < loc - 2; i++) {
+                temp = temp.next;
+                ptr = ptr.next;
+            }
+            temp.next = newNode;
+            newNode.pre = temp;
+            newNode.next = ptr;
+        }
+        System.out.println("node insert......");
+
+    }
+
+    public void deletefirst() {
+        Node temp = head;
+        if (temp == null) {
+            System.out.println("list is empty");
+        } else {
+            temp = temp.next;
+            temp.pre = null;
+            head = temp;
+            System.out.println("delete first node.......");
+
+        }
+
+    }
+
+    public void deletelast() {
+        Node temp = head;
+        if (temp == null) {
+            System.out.println("list is empty");
+        } else {
+
+            tail = tail.pre;
+            tail.next = null;
+            System.out.println("delete last node.......");
+
+        }
+
+    }
+
+    public void deletespecific() {
+        Scanner s = new Scanner(System.in);
+        Node temp = head;
+        Node ptr = temp.next;
+       
+        System.out.println("enter location");
+        int loc = s.nextInt();
+
+        if(head == null){
+
+            System.out.println("list is empty");
+       
+        } 
+        else {
+          
+            for ( int i = 0; i < loc - 2; i++) {
+                temp = temp.next;
+                ptr = ptr.next;
+            }
+            if(loc==1){
+
+                deletefirst();
+            
+            }
+        
+            else{
+                if(ptr.next==null){
+                    temp.next=null;
+               
+                }
+                else{
+                temp.next=ptr.next;
+                ptr=ptr.next;
+                ptr.pre=temp;
+                }
+            }
+        }
+        System.out.println("node delete ......");
+
+    }
+
+    public void display() {
+        Node temp = head;
+        if (temp == null) {
+            System.out.println("list is empty");
+        } else {
+            System.out.println("your list");
+            System.out.print("[ ");
+            while (temp != null) {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            }
+            System.out.println(" ]");
+
+        }
+
+    }
+
+    class Node {
+
+        Node pre = null;
+        int data;
+        Node next = null;
+
+        Node(int data) {
+            this.data = data;
+        }
+
+    }
+}
