@@ -1,0 +1,281 @@
+
+import java.util.Scanner;
+
+public class circularlinklist {
+
+    Node head;
+    Node tail;
+
+    public static void main(String[] args) {
+        circularlinklist circularlinklist = new circularlinklist();
+        Scanner s = new Scanner(System.in);
+
+        while (1 == 1) {
+            System.out.println("select operation");
+            System.out.println("1.Insert node");
+            System.out.println("2.Delete node");
+            System.out.println("3. display");
+            System.out.println("0. stoping");
+            System.out.println("*************");
+            System.out.print("enter input:");
+            int n = s.nextInt();
+            switch (n) {
+                case 1:
+                System.out.println("1. insert first ");
+                System.out.println("2. insert last  ");
+                System.out.println("3. insert specific position ");
+                    int sv=s.nextInt();
+                    switch (sv) {
+                        case 1:
+                        System.out.println(" ");
+                            circularlinklist.addfirst();
+                            break;
+                        case 2:
+                            circularlinklist.addlast();
+                            break;
+                        case 3:
+                            circularlinklist.addspecific();
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    break;
+                   
+                case 2:
+                System.out.println(" ");
+                System.out.println("4. deletion first ");
+                System.out.println("5. deletion last ");
+                System.out.println("6. deletion specific position ");
+                int svv=s.nextInt();
+                switch (svv) {
+                    case 4:
+                        circularlinklist.deletefirst();
+                        break;
+                    case 5:
+                        circularlinklist.deletelast();
+                        break;
+                    case 6:
+                        circularlinklist.deletespecific();
+                        break;
+                
+                    default:
+                        break;
+                }
+                    break;
+                    
+                case 3:
+                    circularlinklist.display();
+                    break;
+        
+                case 0:
+                    System.out.println("exting......");
+                    return;
+
+            }
+
+        }
+
+    }
+
+    public void addfirst() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("enter data");
+        int data = s.nextInt();
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+            newNode.next = head;
+            System.out.println("new node created.....");
+            return;
+        } else {
+            newNode.next = head;
+            head = newNode;
+            tail.next = head;
+
+        }
+        System.out.println("node insert.....");
+
+    }
+
+    public void addlast() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("enter data");
+        int data = s.nextInt();
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+            newNode.next = head;
+            System.out.println("new node created.....");
+            return;
+        } else {
+            tail.next = newNode;
+            newNode.next = head;
+            tail = newNode;
+
+        }
+        System.out.println("node inserted last....");
+
+    }
+
+    public void addspecific() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("enter data");
+        int data = s.nextInt();
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+            newNode.next = head;
+            System.out.println("new node created.....");
+            return;
+        } else {
+            Node temp = head;
+            Node ptr = temp.next;
+            System.out.println("enter position");
+
+            int loc = s.nextInt();
+            int count = 1;
+            while (temp.next != head) {
+                count++;
+                temp = temp.next;
+            }
+
+            // Check if the location is valid
+            if (loc > count + 1 || loc < 1) {  // loc > count + 1 means location is invalid
+                System.out.println("Invalid location");
+                return;
+            }
+
+            for (int i = 0; i < loc - 2; i++) {
+                temp = temp.next;
+                ptr = ptr.next;
+            }
+            if (loc == 1) {
+                newNode.next = temp;
+                head = newNode;
+                tail.next = head;
+                return;
+
+            }
+            if (ptr.next == head) {
+                ptr.next = newNode;
+                newNode.next = head;
+                tail = newNode;
+            } else {
+                temp.next = newNode;
+                newNode.next = ptr;
+            }
+        }
+
+    }
+
+    public void deletefirst() {
+        if (head == null) {
+            System.out.println("list is empty");
+            return;
+
+        } else {
+            Node temp = head;
+            head = temp.next;
+            tail.next = head;
+            System.out.println("delete node...");
+        }
+    }
+
+    public void deletelast() {
+        if (head == null) {
+            System.out.println("list is empty");
+            return;
+
+        } else {
+            Node temp = head;
+            while (temp.next.next != head) {
+                temp = temp.next;
+
+            }
+            tail = temp;
+            temp.next = head;
+            System.out.println("delete node...");
+        }
+    }
+
+    public void deletespecific() {
+        Scanner s = new Scanner(System.in);
+        if (head == null) {
+            System.out.println("list is empty");
+            return;
+
+        } else {
+
+            System.out.println("enter position");
+           Node tempp=head;
+            int loc = s.nextInt();
+            int count = 1;
+            while (tempp.next != head) {
+                count++;
+                tempp = tempp.next;
+            }
+
+            // Check if the location is valid
+            if (loc > count + 1 || loc < 1) {  // loc > count + 1 means location is invalid
+                System.out.println("Invalid location");
+                return;
+            }
+            Node temp = head;
+            Node ptr = temp.next;
+            for (int i = 0; i < loc - 2; i++) {
+                temp = temp.next;
+                ptr = ptr.next;
+            }
+            System.out.println("temp:"+temp.data);
+            System.out.println("ptr:"+ptr.data);
+            if (loc == 1) {  // first node
+                head = temp.next;
+                tail.next = head;
+                return;
+
+            }
+            if (ptr.next == head) { // last node
+                tail = temp;
+                tail.next = head;
+
+            } else {
+
+                temp.next = ptr.next;
+
+            }
+            System.out.println("delete node...");
+        }
+    }
+
+    public void display() {
+        if (head == null) {
+            System.out.println("list is empty");
+            return;
+        } else {
+            Node temp = head;
+            System.out.println("your data");
+            do {
+                System.out.println(temp.data);
+                temp = temp.next;
+            } while (temp != head);
+        }
+    }
+
+    class Node {
+
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+
+        }
+
+    }
+
+}
